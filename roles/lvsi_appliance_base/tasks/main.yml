@@ -12,68 +12,36 @@
 # extract tarball
 # motd
 
-# tasks file for le-appliance
-- name: Check if appliance is already installed
-  stat:
-    path: "{{ temp_dir }}/{{ appliance_tarball }}"
-  register: appliance_installed
-- name: Check prereqs
-  stat:
-    path: "{{ temp_dir }}/le-appliance/prereqs.sh"
-  register: prereqs_installed
+- block:
+    - name: Check if appliance is already installed
+      stat:
+        path: "{{ install_dir }}"
+      register: appliance_installed
 
-- name: Download appliance tarball
-  get_url:
-    url: "https://example.com/{{ appliance_tarball }}"
-    dest: "{{ temp_dir }}/{{ appliance_tarball }}"
-    mode: 0644
+- block:
+    - name: Check prereqs
+      stat:
+        path: "{{ temp_dir }}/le-appliance/prereqs.sh"
+      register: prereqs_installed
+
+    - name: Ensure local admin account
+      user:
+        name: "{{ admin_username }}"
+        password: "{{ admin_password | password_hash('sha512') }}"
+        shell: /bin/bash
+        update_password: on_create
+        createhome: yes
+        group: admin
+
+    - name: Ensure local admin account is in sudoers
+      lineinfile:
+        path: /etc/sudoers
+        line: "{{ admin_username }} ALL=(ALL) NOPASSWD: ALL"
+        validate: "visudo -cf %s"
+
+    - name: Ensure local loginenterprise group
+      group:
+        name: loginenterprise
+        state: present
+        guid: 1002
   when: not appliance_installed.stat.exists
-
-- name: Extract appliance tarball
-  unarchive:
-    src: "{{ temp_dir }}/{{ appliance_tarball }}"
-    dest: "{{ temp_dir }}"
-    remote_src: yes
-    creates: "{{ temp_dir }}/le-appliance"
-  when: not appliance_installed.stat.exists
-
-- name: Install appliance
-  command: "{{ temp_dir }}/le-appliance/install.sh -y"
-  args:
-    chdir: "{{ temp_dir }}/le-appliance"
-  when: not appliance_installed.stat.exists
-
-- name: Set hostname
-  hostname:
-    name: "{{ hostname }}"
-  when: not appliance_installed.stat.exists
-
-- name: Set domainname
-  lineinfile:
-    path: /etc/resolv.conf
-    line: "domain {{ domainname }}"
-  when: not appliance_installed.stat.exists
-
-- name: Ensure local admin account
-  user:
-    name: "{{ admin_username }}"
-    password: "{{ admin_password | password_hash('sha512') }}"
-    shell: /bin/bash
-    update_password: on_create
-  when: not appliance_installed.stat.exists
-
-  - name: Ensure local admin account is in sudoers
-  lineinfile:
-    path: /etc/sudoers
-    line: "{{ admin_username }} ALL=(ALL) NOPASSWD: ALL"
-    validate: "visudo -cf %s"
-  when: not appliance_installed.stat.exists
-
-  - name: Ensure local loginenterprise group
-  group:
-    name: loginenterprise
-    state: present
-  when: not appliance_installed.stat.exists
-  
-
-
