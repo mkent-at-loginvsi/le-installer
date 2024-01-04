@@ -4,6 +4,11 @@
   hosts: 127.0.0.1
   connection: local
   become: yes
+  vars_prompt:
+    - name: "admin_password"
+      prompt: "What is your admin password?"
+      private: yes
+
   tasks:
     - name: Install Login Enterprise
       include_role:

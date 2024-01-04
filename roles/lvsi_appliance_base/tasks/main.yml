@@ -1,9 +1,26 @@
 ---
+# tasks file for lvsi_appliance_base
+# everything outside first run and any post first run tasks
+
+# base packages
+# admin account
+# admin account in sudoers
+# loginenterprise group
+# sysctl
+
+# tarball
+# extract tarball
+# motd
+
 # tasks file for le-appliance
 - name: Check if appliance is already installed
   stat:
     path: "{{ temp_dir }}/{{ appliance_tarball }}"
   register: appliance_installed
+- name: Check prereqs
+  stat:
+    path: "{{ temp_dir }}/le-appliance/prereqs.sh"
+  register: prereqs_installed
 
 - name: Download appliance tarball
   get_url:
@@ -58,3 +75,5 @@
     state: present
   when: not appliance_installed.stat.exists
   
+
+

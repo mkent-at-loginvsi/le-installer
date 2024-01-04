@@ -1,2 +1,7 @@
 ---
 # defaults file for le-appliance
+admin_username: "admin"
+hostname: "le-appliance"
+domainname: "example.com"
+temp_dir: "/tmp"
+appliance_tarball: "le-appliance-1.0.0.tar.gz"

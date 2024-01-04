@@ -1,0 +1,5 @@
+---
+# defaults file for lvsi_appliance_base
+install_dir: "/loginvsi"
+
+#package list
