@@ -12,4 +12,4 @@
   tasks:
     - name: Install Login Enterprise
       include_role:
-        name: lvsi-appliance
+        name: le-appliance
