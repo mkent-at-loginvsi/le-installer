@@ -1,0 +1,10 @@
+---
+# tasks file for le-installer
+- name: Install Login Enterprise Locally
+  hosts: 127.0.0.1
+  connection: local
+  become: yes
+  tasks:
+    - name: Install Login Enterprise
+      include_role:
+        name: lvsi-appliance
