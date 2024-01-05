@@ -1,0 +1,18 @@
+---
+# tasks file for le-installer
+- name: Install Login Enterprise Locally
+  hosts: all 
+  become: yes
+  vars_prompt:
+    - name: "admin_password"
+      prompt: "What is your admin password?"
+      private: yes
+
+  tasks:
+    - name: Install Login Enterprise
+      include_role:
+        name: le-appliance
+    - name: Check Result
+      debug:
+        msg: "Login Enterprise is installed"
+      when: appliance_installed is defined
