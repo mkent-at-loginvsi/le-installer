@@ -4,13 +4,13 @@
   - name: RAM Check
     assert:
       that:
-        - ansible_memtotal_mb >= 4096
+        - ansible_memtotal_mb >= {{ required_ram }}}
   - name: CPU Check
     assert:
       that:
-        - ansible_processor_cores >= 2
+        - ansible_processor_cores >= {{ required_cpu }}
   - name: Disk Check
     # 30 GB
     assert:
       that:
-        - (ansible_mounts|selectattr("mount", "equalto", "/")|list)[0].size_available >= 32212254720
+        - (ansible_mounts|selectattr("mount", "equalto", "/")|list)[0].size_available >= {{ required_space ))    #32212254720
