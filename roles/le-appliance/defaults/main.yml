@@ -1,5 +1,11 @@
 ---
 # defaults file for le-appliance
+# Hardware requirements
+required_cpu: 2
+required_ram: 4096
+required_space: 32212254720
+
+# Login Enterprise appliance settings
 admin_username: "admin"
 hostname: "le-appliance"
 domainname: "example.com"
@@ -7,6 +13,5 @@ temp_dir: "/tmp"
 appliance_tarball: "le-appliance-1.0.0.tar.gz"
 install_dir: "/loginvsi"
 
-required_cpu: 2
-required_ram: 4096
-required_space: 32212254720
+# Installer settings
+safe_mode: true
