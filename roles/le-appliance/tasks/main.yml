@@ -5,3 +5,12 @@
 
 - name: Check if system is supported as configured
   include_tasks: check_system.yml
+
+- name: Install Login Enterprise Appliance
+  include_tasks: install.yml
+
+- name: Configure Login Enterprise Appliance
+  include_tasks: configure.yml
+
+- name: Update Login Enterprise Appliance
+  include_tasks: update.yml
