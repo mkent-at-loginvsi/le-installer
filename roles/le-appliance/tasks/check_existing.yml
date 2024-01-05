@@ -5,3 +5,4 @@
       stat:
         path: "{{ install_dir }}"
       register: appliance_installed
+  when: "{{ safe_mode == true }}"

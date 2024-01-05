@@ -107,3 +107,22 @@
 
 - name: Load Docker images
   shell: docker load -i "{{ temp_dir }}/appliance/images/*"
+  args:
+    creates: /etc/docker/images_loaded
+  when: not appliance_installed.stat.exists
+
+- name: Create firstrun file
+  file:
+    path: "{{ install_dir }}/first_run.chk"
+    state: touch
+  when: not appliance_installed.stat.exists
+
+- name: Set hostname
+  hostname:
+    name: "{{ hostname }}"
+  when: not appliance_installed.stat.exists
+
+- name: Set domainname
+  domain:
+    name: "{{ domainname }}"
+  when: not appliance_installed.stat.exists
