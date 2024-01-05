@@ -13,3 +13,7 @@
     - name: Install Login Enterprise
       include_role:
         name: le-appliance
+    - name: Check Result
+      debug:
+        msg: "Login Enterprise is installed"
+      when: appliance_installed is defined
