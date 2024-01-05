@@ -1,0 +1,7 @@
+---
+# Check if the appliance is already installed
+- block:
+    - name: Check if appliance is already installed
+      stat:
+        path: "{{ install_dir }}"
+      register: appliance_installed
