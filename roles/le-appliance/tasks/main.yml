@@ -2,3 +2,6 @@
 # tasks file for le-appliance
 - name: Check if Login Enterprise is installed
   include_tasks: check_existing.yml
+
+- name: Check if system is supported as configured
+  include_tasks: check_system.yml
