@@ -13,4 +13,4 @@
     # 30 GB
     assert:
       that:
-        - (ansible_mounts|selectattr("mount", "equalto", "/")|list)[0].size_available >= {{ required_space ))    #32212254720
+        - (ansible_mounts|selectattr("mount", "equalto", "/")|list)[0].size_available >= {{ required_space }}
