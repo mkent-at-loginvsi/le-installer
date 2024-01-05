@@ -4,7 +4,7 @@
   - name: RAM Check
     assert:
       that:
-        - ansible_memtotal_mb >= {{ required_ram }}}
+        - ansible_memtotal_mb >= {{ required_ram }}
   - name: CPU Check
     assert:
       that:
